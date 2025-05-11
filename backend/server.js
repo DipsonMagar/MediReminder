@@ -10,9 +10,11 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Frontend URL
-    methods: ['GET', 'POST', 'DELETE'] // Explicitly allow DELETE
-  }));
+  origin: 'http://localhost:5173', // your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 
 // Connect to MongoDB

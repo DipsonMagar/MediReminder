@@ -132,6 +132,34 @@ const Medicine = () => {
     navigate("/login");
   };
 
+const handleMarkAsTaken = async (medicineId) => {
+    console.log("✅ Button clicked!", medicineId); // Add this first
+  try {
+     console.log("Calling:", `${import.meta.env.VITE_API_URL}/api/medicines/${userId}/${medicineId}/status`);
+    console.log("User ID:", userId);
+    console.log("Medicine ID:", medicineId);
+
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}/api/medicines/${userId}/${medicineId}/status`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    // Update the local state with the new medicine object
+    setMedicines((prev) =>
+      prev.map((med) => (med._id === medicineId ? response.data : med))
+    );
+  } catch (error) {
+    console.error("Failed to mark as taken:", error.response?.data || error.message);
+    alert("Could not update taken status");
+  }
+};
+
+
   // Update statistics calculations
   const filteredMedicines = medicines.filter((med) => !med.status);
   const takenCount = medicines.filter((med) => med.status).length;
@@ -247,6 +275,15 @@ const Medicine = () => {
                         {med.notes && <p className="notes">{med.notes}</p>}
                       </div>
                       <div className="med-actions">
+                        {!med.status && (
+                        <button
+                          className="take-btn"
+                          title="Mark as taken"
+                          onClick={() => handleMarkAsTaken(med._id)}
+                        >
+                          ✅
+                        </button>
+                      )}
                       <button
               className="delete-btn"
               title="Remove medication"

@@ -293,10 +293,15 @@
   transition: var(--transition-standard);
 }
 
-.taken-btn {
-  background: var(--accent-green);
+.take-btn {
+  background-color: #4caf50;
   color: white;
-  font-size: 1rem;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .taken-btn:hover {
@@ -307,7 +312,12 @@
 .delete-btn {
   background: var(--accent-red);
   color: white;
-  font-size: 1.3rem;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .delete-btn:hover {

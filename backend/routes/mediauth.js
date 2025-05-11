@@ -78,6 +78,34 @@ router.delete('/medicines/:userId/:medicineId', async (req, res) => {
   }
 });
 
+router.put('/medicines/:userId/:medicineId/status', async (req, res) => {
+  try {
+    const { userId, medicineId } = req.params;
+
+    console.log("Incoming PUT /status:", { userId, medicineId });
+
+    const updated = await Medicine.findOneAndUpdate(
+      {
+        _id: new mongoose.Types.ObjectId(medicineId),
+        userId: new mongoose.Types.ObjectId(userId)
+      },
+      { $set: { status: true } },
+      { new: true }
+    );
+
+    console.log("Update result:", updated);
+
+    if (!updated) {
+      return res.status(404).json({ error: "Medicine not found" });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    console.error("Error updating medicine status:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 
 module.exports = router;
